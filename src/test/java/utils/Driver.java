@@ -9,8 +9,9 @@ import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 public class Driver {
+
     public static AndroidDriver<AndroidElement> androidDriver;
-    static DesiredCapabilities capabilities=new DesiredCapabilities();
+    static DesiredCapabilities capabilities = new DesiredCapabilities();
 
     public static AndroidDriver getAndroidDriver() {
         URL appiumServerUrl = null;
@@ -19,6 +20,7 @@ public class Driver {
         } catch (MalformedURLException e) {
             System.out.println(e.getMessage());
         }
+
         if (androidDriver == null) {
             capabilities.setCapability("deviceName", ConfigReader.getProperty("deviceName"));
             capabilities.setCapability("platformName", ConfigReader.getProperty("platformName"));
@@ -26,19 +28,20 @@ public class Driver {
             capabilities.setCapability("automationName", ConfigReader.getProperty("automationName"));
             capabilities.setCapability("app", System.getProperty("user.dir") + ConfigReader.getProperty("app"));
             capabilities.setCapability("noReset", false);
-            //When set to false, the application is reset at the beginning of each test and starts from the beginning.
+            // When set to false, the application is reset at the beginning of each test and starts from the beginning.
             // It doesn't leave anything in memory, it clears it automatically.
         }
-        if (ConfigReader.getProperty("platformName").equals("Android")){
-            assert appiumServerUrl!=null;
+        if (ConfigReader.getProperty("platformName").equals("Android")) {
+            assert appiumServerUrl != null;
+            androidDriver = new AndroidDriver<AndroidElement>(appiumServerUrl, capabilities);
             androidDriver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 
-    } else {
-        throw new UnsupportedOperationException("Invalid Platform Name");
-    }
+        } else {
+            throw new UnsupportedOperationException("Invalid Platform Name");
+        }
 
         return androidDriver;
-}
+    }
 
     public static void closeAppiumDriver() {
         if (androidDriver != null) {
@@ -52,6 +55,5 @@ public class Driver {
             androidDriver.quit();
             androidDriver = null;
         }
-
     }
 }

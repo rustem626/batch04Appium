@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class ConfigReader {
+
     static Properties properties ;
     static {
         try{
@@ -26,4 +27,8 @@ public class ConfigReader {
     public static String get(String keyName) {
 
         return properties.getProperty(keyName);
-    }}
+    }
+
+
+
+}
