@@ -3,6 +3,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import org.openqa.selenium.By;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -34,6 +35,9 @@ public class C03_CalculationTest {
         androidDriver.findElement(By.id("com.google.android.calculator:id/digit_7")).click();
         androidDriver.findElement(By.id("com.google.android.calculator:id/eq")).click();
     }
-
+    @AfterTest
+    public void tearDown(){
+        androidDriver.quit();
+    }
 
 }
